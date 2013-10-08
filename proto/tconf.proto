@@ -1,0 +1,16 @@
+message TconfColDef
+{
+	optional string name = 1;
+	optional string type = 2;
+}
+
+message TconfRow
+{
+	repeated string values=1;
+}
+
+message TconfTable
+{
+	repeated TconfColDef colDefs = 1;
+	repeated TconfRow rows = 2;
+}
