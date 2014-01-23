@@ -10,6 +10,7 @@
 		public var saveColArray:Array;
 		public var lineCacheRowNum:int;
 		public var tagName:String;
+		public var className:String;
 		
 		public function Content() {
 			// constructor code
@@ -166,7 +167,6 @@
 		}
 		
 		public function createH():String{
-			var className:String = "C"+tagName;
 			var ret:String =  "#pragma once\n";
 			ret += "#include \"tconfHelper.h\"\n";
 			ret += "class "+className+" : public CTconfHelper\n{\n";
@@ -202,7 +202,33 @@
 			return ret;
 
 		}
+		
+		public function createH2():String{
+			var ret:String =  "#pragma once\n";
+			ret += "#include \"tconfHelper.h\"\n";
+			ret += "class "+className+" : public CTconfHelper::ColumnInfo\n{\n";
+			ret += "public:\n";
+			
+			//静态定义
+			for(var idx:int =0; idx<saveColArray.length; ++idx)
+			{
+				ret += "\tconst char* "+ (saveColArray[idx] as String).toUpperCase()+";\n";
+			}
+			
+			//构造函数
+			ret += "\n\t"+className+"()\n\t{\n";
+			for(var idx:int =0; idx<saveColArray.length; ++idx)
+			{
+				ret += "\t\t"+ (saveColArray[idx] as String).toUpperCase()+"=\""+saveColArray[idx]+"\";\n";
+				ret += "\t\tm_colNames.push_back(\""+saveColArray[idx]+"\");\n";
+			}
+			ret += "\t}\n\n";
+			
+			ret += "};\n\n";
+		
+			return ret;
 
+		}
 	}
 	
 }

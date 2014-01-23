@@ -58,10 +58,17 @@
 			fs.close();
 			this.txtOutput.appendText(".as <"+path+">已保存\n");
 			
-			//cpp file
+			//h file
 			path = f.nativePath.substr(0, f.nativePath.lastIndexOf("\\"))+"\\"+_content.tagName+".h";
 			fs.open(new File(path), FileMode.WRITE);
 			fs.writeMultiByte(_content.createH(),"utf-8");
+			fs.close();
+			this.txtOutput.appendText(".h <"+path+">已保存\n");
+			
+			//h file v2
+			path = f.nativePath.substr(0, f.nativePath.lastIndexOf("\\"))+"\\"+_content.className+".h";
+			fs.open(new File(path), FileMode.WRITE);
+			fs.writeMultiByte(_content.createH2(),"utf-8");
 			fs.close();
 			this.txtOutput.appendText(".h <"+path+">已保存\n");
 		}
@@ -143,6 +150,7 @@
 			var colInited:Boolean = false;
 			var rowIdx:int = 0;
 			_content.tagName = "Auto"+x.name();
+			_content.className = "C"+_content.tagName;
 			for each(var row:XML in x.children())
 			{
 				var rowData:Array = null;
